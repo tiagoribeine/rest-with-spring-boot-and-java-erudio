@@ -9,17 +9,22 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController // Faz com que seja reconhecido como um Controller Rest
 public class GreetingController {
 
-    private static final String template = "Hello, %s!"; // %s! será substituido pelo valor enviado como parâmetro através da requisição HTTP
-    private final AtomicLong counter = new AtomicLong();
+    private static final String template = "Hello, %s!"; //  Template Mensagem: %s é placeholder que será substituído pelo valor enviado como parâmetro através da requisição HTTP
+    private final AtomicLong counter = new AtomicLong(); // Gera IDs únicos thread-safe
 
     // http://localhost:8080/greeting?name=Tiago - será passado como query param
-    @RequestMapping("/greeting") //Faz com que seja reconhecido como um metodo exposto via HTTP - ("/greeting") -> Nome do Endpoint
+    @RequestMapping("/greeting")
+    /* @RequestMapping: Faz com que seja reconhecido como um metodo exposto via HTTP - podendo ser chamado por URL ("/greeting").
+    Torna metodo acessível pela internet e nao somente por classes Java */
     public Greeting greeting(
-            @RequestParam(value = "name", defaultValue = "Word") // Para ler esse parâmetro precisa-se adicionar essa annotation
+            @RequestParam(value = "name", defaultValue = "Word") // Captura parâmetro da URL (?name=valor)
+                    /*
+                    // 'defaultValue = "World"' = valor padrão se não enviarem o parâmetro
+                    // 'value = "name"' = nome do parâmetro na URL
+                     */
             String name){
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
-        //counter.incrementAndGet() Irá mockar o Id, a cada requisição ele irá incrementar e retornar um valor maior
-
+        return new Greeting(counter.incrementAndGet(), //Irá mockar o Id, a cada requisição ele irá incrementar e retornar um valor maior
+                String.format(template, name)); //Monta mensagem: "Hello, {nome}!"
     }
 
 }
