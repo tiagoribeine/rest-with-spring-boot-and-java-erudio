@@ -32,16 +32,27 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>  <!-- Spring Boot DevTools - recarregamento automático em desenvolvimento -->
-            <scope>runtime</scope> <!-- Só disponível durante execução -->
-            <optional>true</optional> <!-- Não é repassado para outros projetos -->
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>   <!-- Dependencia do Spring Data JPA -->
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId> <!-- Dependência do MySQL. Não especificar versão, Spring define automaticamente -->
+            <scope>runtime</scope> <!-- Padrão: Disponível em todas as fases: Compilação, testes e execução. runtime: Disponivel apenas durante testes e execução. -->
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId> <!-- Spring Boot Test - testes automatizados -->
             <scope>test</scope>    <!-- Só usado em testes -->
-        </dependency>   <!-- Inclui: JUnit, Mockito, AssertJ, etc. -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>  <!-- Spring Boot DevTools - recarregamento automático em desenvolvimento -->
+            <scope>runtime</scope> <!-- Só disponível durante execução -->
+            <optional>true</optional> <!-- Não é repassado para outros projetos -->
+        </dependency>
     </dependencies>
 
     <build>

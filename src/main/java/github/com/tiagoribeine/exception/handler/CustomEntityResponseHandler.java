@@ -1,6 +1,6 @@
 package github.com.tiagoribeine.exception.handler;
 import github.com.tiagoribeine.exception.ExceptionResponse;
-import github.com.tiagoribeine.exception.UnsupportedMathOperationException;
+import github.com.tiagoribeine.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,12 +28,12 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 request.getDescription( false)); //Detalhes da requisição
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR); //Internal_Server_Error -> Erro 500;
     }
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception ex, WebRequest request){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(Exception ex, WebRequest request){
         ExceptionResponse response = new ExceptionResponse(
                 new Date(),
                 ex.getMessage(), //Pega a mensagem da exceção
                 request.getDescription( false));
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR); //Internal_Server_Error -> Erro 500;
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND); //Internal_Server_Error -> Erro 500;
     }
 }

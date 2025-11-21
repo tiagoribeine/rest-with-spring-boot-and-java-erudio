@@ -1,55 +1,52 @@
 package github.com.tiagoribeine.controllers;
-import github.com.tiagoribeine.PersonServices;
+import github.com.tiagoribeine.services.PersonServices;
 import github.com.tiagoribeine.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/person") //Define a URL Base
 public class PersonController {
 
 
     @Autowired //Faz com que o Spring Boot injete a instância dessa classe quando for necessário
-    private PersonServices service;
+    private PersonServices service; //Indica que o service desse controlador é o PersonService. Esta variável receberá um PersonServices
     //private PersonServices service = new PersonServices(); Quando não há injeção de dependências
 
     //Find all
-    @RequestMapping(
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
+    @GetMapping(
+            produces = MediaType.APPLICATION_JSON_VALUE //Produz um Json/Lista de Json
     )
-    public List<Person> findAll(){
+    public List<Person> findAll(){ //Retorna todas as pessoas do Service
         return service.findAll();
     }
 
     //Find by Id
-    @RequestMapping(
-            value = "/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
+    @GetMapping(
+            value = "/{id}", //URL
+            produces = MediaType.APPLICATION_JSON_VALUE //Produz um Json
     )
-    public Person findById(
-            @PathVariable("id") String id
+    public Person findById( //Retorna uma pessoa com Id específico do Service
+            @PathVariable("id") Long id
     ){
         return service.findById(id);
     }
 
     //Create
-    @RequestMapping(
-            method = RequestMethod.POST,
+    @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE, //Consome Application Json
             produces = MediaType.APPLICATION_JSON_VALUE // Produz Application Json Value
     )
-    public Person create(@RequestBody Person person){
+    public Person create(@RequestBody Person person){ //Cria pessoa(instancia de Person) no Service
         return service.create(person);
     }
 
     //Update
-    @RequestMapping(
-            method = RequestMethod.PUT,
+    @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE, //Consome Application Json
             produces = MediaType.APPLICATION_JSON_VALUE // Produz Application Json Value
     )
@@ -58,17 +55,11 @@ public class PersonController {
     }
 
     //Delete
-    @RequestMapping(
-            value = "/{id}",
-            method = RequestMethod.DELETE
-    )
-    public void delete(@PathVariable("id") String id)
-    {
+    @DeleteMapping(value = "/{id}") //URL
+    public ResponseEntity<?> delete(@PathVariable("id") Long id){
         service.delete(id);
+        return ResponseEntity.noContent().build(); //Retorna o status Code 204
     }
-
-
-
 }
 
 
