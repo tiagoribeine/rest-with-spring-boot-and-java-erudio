@@ -37,6 +37,11 @@
         </dependency>   <!-- Dependencia do Spring Data JPA -->
 
         <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId> <!-- Dependencia do HATEOAS -->
+        </dependency>
+
+        <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>   <!-- Dependencia Jackson Format xml -->

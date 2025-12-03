@@ -1,5 +1,6 @@
 package github.com.tiagoribeine.exception.handler;
 import github.com.tiagoribeine.exception.ExceptionResponse;
+import github.com.tiagoribeine.exception.RequiredObjectIsNullException;
 import github.com.tiagoribeine.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,14 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 ex.getMessage(), //Pega a mensagem da exceção
                 request.getDescription( false));
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND); //Internal_Server_Error -> Erro 500;
+    }
+
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception ex, WebRequest request){
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(), //Pega a mensagem da exceção
+                request.getDescription( false));
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); //Internal_Server_Error -> Erro 500;
     }
 }
