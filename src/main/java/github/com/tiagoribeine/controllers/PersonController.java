@@ -20,7 +20,10 @@ public class PersonController {
 
     //Find all
     @GetMapping(
-            produces = MediaType.APPLICATION_JSON_VALUE //Produz um Json/Lista de Json
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE}//Produz um Json/Lista de Json
     )
     public List<PersonDTO> findAll(){ //Retorna todas as pessoas do Service
         return service.findAll();
@@ -29,7 +32,10 @@ public class PersonController {
     //Find by Id
     @GetMapping(
             value = "/{id}", //URL
-            produces = MediaType.APPLICATION_JSON_VALUE //Produz um Json
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE} //Produz um Json
     )
     public PersonDTO findById( //Retorna uma pessoa com Id específico do Service
                                @PathVariable("id") Long id
@@ -39,8 +45,14 @@ public class PersonController {
 
     //Create
     @PostMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE, //Consome Application Json
-            produces = MediaType.APPLICATION_JSON_VALUE // Produz Application Json Value
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE}, //Consome Application Json
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE} // Produz Application Json Value
     )
     public PersonDTO create(@RequestBody PersonDTO person){ //Cria pessoa(instancia de Person) no Service
         return service.create(person);
@@ -48,8 +60,14 @@ public class PersonController {
 
     //Update
     @PutMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE, //Consome Application Json
-            produces = MediaType.APPLICATION_JSON_VALUE // Produz Application Json Value
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE}, //Consome Application Json
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE} // Produz Application Json Value
     )
     public PersonDTO update(@RequestBody PersonDTO person) {
         return service.update(person);

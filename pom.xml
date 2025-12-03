@@ -37,6 +37,16 @@
         </dependency>   <!-- Dependencia do Spring Data JPA -->
 
         <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>   <!-- Dependencia Jackson Format xml -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>   <!-- Dependencia Jackson Format yaml -->
+
+        <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId> <!-- Dependência do MySQL. Não especificar versão, Spring define automaticamente -->
             <scope>runtime</scope> <!-- Padrão: Disponível em todas as fases: Compilação, testes e execução. runtime: Disponivel apenas durante testes e execução. -->
