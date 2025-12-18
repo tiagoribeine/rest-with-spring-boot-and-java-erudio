@@ -1,16 +1,24 @@
-# Person API 
+# Person API
 
 **Status: Work in Progress**
 
 A RESTful API for Person management with modern Spring Boot features.
 
-## 🚀 Features (Implemented)
+## Features (Implemented)
 - RESTful endpoints for Person CRUD
 - DTO pattern implementation
 - Swagger/OpenAPI 3 documentation
 - HATEOAS support
 - Content Negotiation (JSON/XML)
 - Database integration
+- **Integration tests with Testcontainers**
+- **Containerized MySQL testing environment**
+
+## Testing Strategy
+- **Unit Tests**: JUnit 5, Mockito
+- **Integration Tests**: Testcontainers, MySQL Docker
+- **API Tests**: RestAssured, Swagger validation
+- **Database Tests**: Isolated MySQL containers
 
 ## Tech Stack
 - Java 17+
@@ -20,13 +28,19 @@ A RESTful API for Person management with modern Spring Boot features.
 - OpenAPI 3 (Swagger)
 - Maven
 - H2 Database (development)
+- **Testcontainers** (integration testing)
+- **MySQL 8.0.32** (test environment)
 
-## 🛠️ Getting Started
+## Links
+- Swagger UI: http://localhost:8080/swagger-ui/index.html
+- API Docs (JSON): http://localhost:8080/v3/api-docs
+
+## Getting Started
 
 ### Prerequisites
 - Java 17 or higher
 - Maven 3.8+
-- Docker (optional)
+- **Docker** (required for integration tests)
 
 ### Installation
 ```bash
