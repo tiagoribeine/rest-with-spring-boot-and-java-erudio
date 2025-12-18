@@ -1,4 +1,4 @@
-package github.com.tiagoribeine.unitetests.mapper.mocks;
+package github.com.tiagoribeine.unittests.mapper.mocks;
 
 import java.util.ArrayList;
 import java.util.Date;

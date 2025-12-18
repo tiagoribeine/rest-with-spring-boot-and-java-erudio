@@ -22,6 +22,7 @@
         <java.version>21</java.version> <!-- Versão do Java para compilar e executar -->
         <dozer.version>7.0.0</dozer.version> <!-- Parametrizado o Dozer version -->
         <springdoc.version>2.7.0</springdoc.version> <!-- Parametrizado o Dozer version -->
+        <testcontainers.version>1.20.4</testcontainers.version> <!-- Parametrizando o TestContainers version-->
     </properties>
 
     <dependencies>
@@ -84,6 +85,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId> <!-- Spring Boot Test - testes automatizados -->
             <scope>test</scope>    <!-- Só usado em testes -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

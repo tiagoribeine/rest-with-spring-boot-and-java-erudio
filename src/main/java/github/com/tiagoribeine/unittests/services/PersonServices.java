@@ -1,4 +1,4 @@
-package github.com.tiagoribeine.services;
+package github.com.tiagoribeine.unittests.services;
 import static github.com.tiagoribeine.mapper.ObjectMapper.parseListObjects;
 import static github.com.tiagoribeine.mapper.ObjectMapper.parseObject;
 

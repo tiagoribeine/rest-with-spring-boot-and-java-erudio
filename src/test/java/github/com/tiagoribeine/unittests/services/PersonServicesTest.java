@@ -1,10 +1,10 @@
-package github.com.tiagoribeine.services;
+package github.com.tiagoribeine.unittests.services;
 
 import github.com.tiagoribeine.data.dto.PersonDTO;
 import github.com.tiagoribeine.exception.RequiredObjectIsNullException;
 import github.com.tiagoribeine.model.Person;
 import github.com.tiagoribeine.repository.PersonRepository;
-import github.com.tiagoribeine.unitetests.mapper.mocks.MockPerson;
+import github.com.tiagoribeine.unittests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -16,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

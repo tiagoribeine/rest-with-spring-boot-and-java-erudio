@@ -1,4 +1,4 @@
-package github.com.tiagoribeine.unitetests.mapper;
+package github.com.tiagoribeine.unittests.mapper;
 import static github.com.tiagoribeine.mapper.ObjectMapper.parseListObjects;
 import static github.com.tiagoribeine.mapper.ObjectMapper.parseObject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
 import github.com.tiagoribeine.data.dto.PersonDTO;
-import github.com.tiagoribeine.unitetests.mapper.mocks.MockPerson;
+import github.com.tiagoribeine.unittests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

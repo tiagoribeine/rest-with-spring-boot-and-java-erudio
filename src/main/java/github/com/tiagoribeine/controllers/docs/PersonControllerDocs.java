@@ -59,8 +59,8 @@ public interface PersonControllerDocs {
     );
 
     //Create
-    @Operation(summary = "Finds a Person",
-            description = "Find a specific Person",
+    @Operation(summary = "Adds a Person",
+            description = "Creates a specific Person",
             tags = {"People"},
             responses = {
                     @ApiResponse(
@@ -78,8 +78,8 @@ public interface PersonControllerDocs {
     PersonDTO create(@RequestBody PersonDTO person);
 
     //Update
-    @Operation(summary = "Finds a Person",
-            description = "Find a specific Person",
+    @Operation(summary = "Updates a Person's information",
+            description = "Updates a Person's information",
             tags = {"People"},
             responses = {
                     @ApiResponse(
@@ -98,8 +98,8 @@ public interface PersonControllerDocs {
     PersonDTO update(@RequestBody PersonDTO person);
 
     //Delete
-    @Operation(summary = "Finds a Person",
-            description = "Find a specific Person",
+    @Operation(summary = "Deletes a Person",
+            description = "Deletes a Person",
             tags = {"People"},
             responses = {
                     @ApiResponse(

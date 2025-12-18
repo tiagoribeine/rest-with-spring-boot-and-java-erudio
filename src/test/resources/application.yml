@@ -1,1 +1,60 @@
-spring.application.name=rest-with-spring-boot-and-java-erudio
+# CONFIGURAÇÃO PRINCIPAL DO SPRING BOOT
+
+server:
+  port = 8888 #Em qual porta inicializaremos - Por padrão os testes devem ser apontados para a porta 8888
+
+spring:
+  # IDENTIFICAÇÃO DA APLICAÇÃO
+  application:
+    name: rest-with-spring-boot-and-java-erudio
+
+  # CONFIGURAÇÃO DO BANCO DE DADOS MYSQL
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver #Classe do driver JDBC para conectar com MySQL
+    #url, username, password serão gerados dinamicamente.
+  # CONFIGURAÇÕES DO JPA (Java Persistence API) - ORM
+  jpa:
+    # CONFIGURAÇÕES DO HIBERNATE (implementação do JPA)
+    hibernate:
+      ddl-auto: none #https://stackoverflow.com/questions/438146/what-are-the-possible-values-of-the-hibernate-hbm2ddl-auto-configuration-and-wha
+      #   Estratégia para o esquema do banco:a
+      #   update → Atualiza automaticamente as tabelas baseado nas entidades
+      #   create → Apaga e recria as tabelas toda vez
+      #   validate → Só valida se esquema coincide com entidades
+      #   none → Não faz nada (esquema manual)
+      #   Em produção: usar 'validate' ou 'none' para evitar perda de dados!
+
+    # PROPRIEDADES ESPECÍFICAS DO HIBERNATE
+    properties:
+      hibernate:
+        #dialect: org.hibernate.dialect.MySQL8Dialect
+        # ↑ - "Dialeto" do banco - diz ao Hibernate como gerar SQL específico para MySQL 8+
+        #   -  Cada banco (MySQL, PostgreSQL, Oracle) tem SQL ligeiramente diferente
+
+    show-sql: false
+    # ↑ - Exibe no console os comandos SQL gerados pelo Hibernate:
+    #   - true → Mostra SQL (útil para desenvolvimento/debug)
+    #   - false → Não mostra SQL (melhor para produção)
+
+    open-in-view: false
+    #   - Controla se a sessão do banco fica aberta durante toda a requisição HTTP:
+    #   - true → Sessão aberta (pode causar problemas de performance)
+    #   - false → Sessão fecha após cada operação
+
+logging:
+  level:
+    #root: WARN #Logg em nivel global
+    githut.com.tiagoribeine: DEBUG #Pacote que queremos investigar em nivel DEBUG . Restante rodara em INFO.
+
+springdoc:
+  paths-to-match: /api/**/v1/**
+  swagger-ui:
+    user-root-path: true
+
+
+
+
+
+
+
+

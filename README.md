@@ -21,6 +21,12 @@ A RESTful API for Person management with modern Spring Boot features.
 - Maven
 - H2 Database (development)
 
+
+Link to Swagger Open API Documentation: http://localhost:8080/swagger-ui/index.html
+
+Link to JSON Swagger Open API Documentation: http://localhost:8080/v3/api-docs
+
+
 ## 🛠️ Getting Started
 
 ### Prerequisites
