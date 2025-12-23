@@ -35,6 +35,9 @@ public class Person implements Serializable {
     @Column(nullable = false, length = 6) //Nome não especificado, Spring entende que o nome é igual na coluna da tabela(db) e na entidade
     private String gender;
 
+    @Column(nullable = false)
+    private Boolean enabled;
+
     public Person() {} //Construtor - Spring Data JPA e frameworks de serialização exigem construtor vazio
 
     //Getters e Setters - Spring, Jackson e JPA usam getters/setters
@@ -78,15 +81,24 @@ public class Person implements Serializable {
         this.gender = gender;
     }
 
-    //Gerando o Equals and HashCode: Botão Direito >> Generate >> Equals and HashCode
-    @Override
-    public boolean equals(Object o) { //Compara se dois objetos são iguais baseado nos valores de seus atributos
-        if (!(o instanceof Person person)) return false;
-        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
-    public int hashCode() { //Gera um código único baseado nos atributos
-        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender()) && Objects.equals(getEnabled(), person.getEnabled());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender(), getEnabled());
     }
 }

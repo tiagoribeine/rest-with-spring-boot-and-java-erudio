@@ -42,7 +42,6 @@ public class PersonController implements PersonControllerDocs {
                     MediaType.APPLICATION_XML_VALUE,
                     MediaType.APPLICATION_YAML_VALUE} //Produz um Json
     )
-
     @Override
     public PersonDTO findById( //Retorna uma pessoa com Id específico do Service
                                @PathVariable("id") Long id
@@ -82,6 +81,18 @@ public class PersonController implements PersonControllerDocs {
     @Override
     public PersonDTO update(@RequestBody PersonDTO person) {
         return service.update(person);
+    }
+
+    @PatchMapping(
+            value = "/{id}", //URL
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE} //Produz um Json
+    )
+    @Override
+    public PersonDTO disablePerson(@PathVariable("id") Long id) {
+        return service.disablePerson(id);
     }
 
     //Delete

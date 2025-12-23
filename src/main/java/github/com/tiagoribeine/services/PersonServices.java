@@ -8,6 +8,7 @@ import github.com.tiagoribeine.exception.RequiredObjectIsNullException;
 import github.com.tiagoribeine.exception.ResourceNotFoundException;
 import github.com.tiagoribeine.model.Person;
 import github.com.tiagoribeine.repository.PersonRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,23 @@ public class PersonServices {
         return dto;
     }
 
+    @Transactional
+    public PersonDTO disablePerson(Long id) {
+
+        logger.info("Disabling one person!"); //Registra uma operação normal do sistema a nivel informativo.
+
+        repository.findById(id) //Recuperamos a entidade pelo id fornecido pelo client. São dados que ja estão no banco
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!")); //Alterar também no controller, inicialmente estava String
+        repository.disablePerson(id);
+
+        var entity = repository.findById(id).get();
+        var dto =  parseObject(entity, PersonDTO.class);
+        addHateoasLinks(dto);
+        return dto;
+    }
+
     public void delete(Long id) {
+
         logger.info("Deleting one person!"); //Registra uma operação normal do sistema a nivel informativo.
         Person entity = repository.findById(id) //Recuperamos a entidade pelo id fornecido pelo client. São dados que ja estão no banco
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!")); //Alterar também no controller, inicialmente estava String
@@ -102,7 +119,9 @@ public class PersonServices {
         // Create
         dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
         // UPDATE
-        dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("update").withType("PUT"));
+        dto.add(linkTo(methodOn(PersonController.class).update(dto)).withRel("update").withType("PUT"));
+        // PATCH
+        dto.add(linkTo(methodOn(PersonController.class).disablePerson(dto.getId())).withRel("update").withType("PATCH"));
         // DELETE
         dto.add(linkTo(methodOn(PersonController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
