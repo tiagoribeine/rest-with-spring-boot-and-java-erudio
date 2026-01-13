@@ -1,4 +1,4 @@
-package github.com.tiagoribeine.services.services;
+package github.com.tiagoribeine.services;
 
 import github.com.tiagoribeine.controllers.BookController;
 import github.com.tiagoribeine.data.dto.BookDTO;
@@ -9,6 +9,8 @@ import github.com.tiagoribeine.repository.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,13 +29,17 @@ public class BookServices {
     BookRepository repository;
 
 
-    public List<BookDTO> findAll() {
+    public Page<BookDTO> findAll(Pageable pageable) {
 
         logger.info("Finding all Book!");
 
-        var books = parseListObjects(repository.findAll(), BookDTO.class);
-        books.forEach(this::addHateoasLinks);
-        return books;
+        var books = repository.findAll(pageable);
+        var booksWithLinks = books.map(book -> {
+           var dto = parseObject(book, BookDTO.class);
+           addHateoasLinks(dto);
+           return dto;
+        });
+        return booksWithLinks;
     }
 
     public BookDTO findById(Long id) {
@@ -87,7 +93,7 @@ public class BookServices {
 
     private void addHateoasLinks(BookDTO dto) {
         dto.add(linkTo(methodOn(BookController.class).findById(dto.getId())).withSelfRel().withType("GET"));
-        dto.add(linkTo(methodOn(BookController.class).findAll()).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(BookController.class).findAll(1, 12)).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(BookController.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(BookController.class).update(dto)).withRel("update").withType("PUT"));
         dto.add(linkTo(methodOn(BookController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));

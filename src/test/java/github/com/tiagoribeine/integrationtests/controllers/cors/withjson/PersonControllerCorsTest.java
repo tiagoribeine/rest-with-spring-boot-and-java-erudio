@@ -1,4 +1,4 @@
-package github.com.tiagoribeine.integrationtests.controllers.withjson;
+package github.com.tiagoribeine.integrationtests.controllers.cors.withjson;
 
 import github.com.tiagoribeine.config.TestConfigs;
 import github.com.tiagoribeine.integrationtests.dto.PersonDTO;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
                 "cors.originPatterns=http://localhost:3000,http://localhost:8080,https://www.erudio.com.br"
         })
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PersonControllerTest extends AbstractIntegrationTest {
+class PersonControllerCorsTest extends AbstractIntegrationTest {
 
     private static RequestSpecification specification;
     private static ObjectMapper objectMapper;
@@ -80,6 +80,7 @@ class PersonControllerTest extends AbstractIntegrationTest {
         assertEquals("Stallman", createdPerson.getLastName());
         assertEquals("New York City - New York - USA", createdPerson.getAddress());
         assertEquals("Male", createdPerson.getGender());
+        assertTrue(createdPerson.getEnabled());
 
     }
 
@@ -147,6 +148,7 @@ class PersonControllerTest extends AbstractIntegrationTest {
         assertEquals("Stallman", createdPerson.getLastName());
         assertEquals("New York City - New York - USA", createdPerson.getAddress());
         assertEquals("Male", createdPerson.getGender());
+        assertTrue(createdPerson.getEnabled());
     }
     @Test
     @Order(4)
@@ -178,5 +180,6 @@ class PersonControllerTest extends AbstractIntegrationTest {
         person.setLastName("Stallman");
         person.setAddress("New York City - New York - USA");
         person.setGender("Male");
+        person.setEnabled(true);
     }
 }

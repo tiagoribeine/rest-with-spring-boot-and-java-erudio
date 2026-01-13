@@ -2,6 +2,7 @@ package github.com.tiagoribeine.data.dto;
 
 import jakarta.persistence.*;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.io.DataInput;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.Objects;
 
 
 @Table(name = "books")
+@Relation(collectionRelation = "books")
 public class BookDTO extends RepresentationModel<BookDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;

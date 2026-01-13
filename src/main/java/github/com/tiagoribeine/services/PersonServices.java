@@ -1,6 +1,4 @@
-package github.com.tiagoribeine.services.services;
-import static github.com.tiagoribeine.mapper.ObjectMapper.parseListObjects;
-import static github.com.tiagoribeine.mapper.ObjectMapper.parseObject;
+package github.com.tiagoribeine.services;
 
 import github.com.tiagoribeine.controllers.PersonController;
 import github.com.tiagoribeine.data.dto.PersonDTO;
@@ -12,11 +10,17 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static github.com.tiagoribeine.mapper.ObjectMapper.parseObject;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -32,14 +36,49 @@ public class PersonServices {
     @Autowired
     PersonRepository repository; //Spring insere o repository no Service, permitindo conexão com o banco de dados
 
+    @Autowired
+    PagedResourcesAssembler<PersonDTO> assembler;
+
     // Busca TODAS as pessoas
-    public List<PersonDTO> findAll(){
+    public PagedModel<EntityModel<PersonDTO>> findAll(Pageable pageable){
         logger.info("Finding all people!"); //Registra uma operação normal do sistema a nivel informativo. Exibe a info no console/terminal
 
-        //Implementando o HATEOAS - find All
-        var persons = parseListObjects(repository.findAll(), PersonDTO.class); //Utilizando o metodo do ObjectMapper para converter em uma DTO
-        persons.forEach(this::addHateoasLinks);
-        return persons;
+        var people = repository.findAll(pageable);
+
+        var peopleWithLinks = people.map(person -> {
+           //Pegando cada person e convertendo para DTO
+            var dto = parseObject(person, PersonDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+        });
+
+        Link findAllLink = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(PersonController.class)
+                        .findAll(pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        String.valueOf(pageable.getSort()))).withSelfRel();
+        return assembler.toModel(peopleWithLinks, findAllLink);
+    }
+
+    public PagedModel<EntityModel<PersonDTO>> findByName(String firstName, Pageable pageable){
+        logger.info("Finding people by Name!"); //Registra uma operação normal do sistema a nivel informativo. Exibe a info no console/terminal
+
+        var people = repository.findPeopleByName(firstName, pageable);
+
+        var peopleWithLinks = people.map(person -> {
+           //Pegando cada person e convertendo para DTO
+            var dto = parseObject(person, PersonDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+        });
+
+        Link findAllLink = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(PersonController.class)
+                        .findAll(pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        String.valueOf(pageable.getSort()))).withSelfRel();
+        return assembler.toModel(peopleWithLinks,
+                findAllLink);
     }
 
     //Busca uma pessoa por ID
@@ -115,7 +154,7 @@ public class PersonServices {
         // find by Id
         dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId())).withSelfRel().withType("GET"));
         // find All
-        dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(PersonController.class).findAll(1, 12,"asc" )).withRel("findAll").withType("GET"));
         // Create
         dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
         // UPDATE

@@ -1,9 +1,12 @@
 package github.com.tiagoribeine.controllers;
 import github.com.tiagoribeine.controllers.docs.BookControllerDocs;
 import github.com.tiagoribeine.data.dto.BookDTO;
-import github.com.tiagoribeine.services.services.BookServices;
+import github.com.tiagoribeine.services.BookServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +31,12 @@ public class BookController implements BookControllerDocs {
                     MediaType.APPLICATION_YAML_VALUE}//Produz um Json/Lista de Json
     )
     @Override
-    public List<BookDTO> findAll(){ //Retorna todas as pessoas do Service
-        return service.findAll();
+    public ResponseEntity<Page<BookDTO>> findAll(
+        @RequestParam(value = "page", defaultValue = "0") Integer page,
+        @RequestParam(value = "size", defaultValue = "12") Integer size
+    ){ //Retorna todas as pessoas do Service
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     //Find by Id
