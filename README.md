@@ -16,6 +16,32 @@ Features (Implemented)
 - CORS configuration with origin patterns
 - Dynamic port allocation for parallel testing
 - Test isolation with independent test cases
+- Pagination with sorting and filtering capabilities
+- Advanced query methods with Spring Data JPA specifications
+
+File Upload/Download Features
+
+Upload Features
+- Single file upload endpoint (`POST /api/file/v1/uploadFile`)
+- Multiple files upload endpoint (`POST /api/file/v1/uploadMultipleFiles`)
+- Configurable upload directory via application properties
+- File type and size validation
+- Automatic file name generation to prevent conflicts
+- Returns download URL for uploaded files
+
+Download Features
+- Secure file download endpoint (`GET /api/file/v1/downloadFile/{fileName}`)
+- Path traversal protection
+- File existence validation
+- Content-Type header auto-detection
+- Content-Disposition header for browser downloads
+
+Configuration
+Configure upload directory in `application.properties`:
+
+properties
+file.upload-dir=/path/to/upload/directory
+
 
 Testing Strategy
 - Unit Tests: JUnit 5, Mockito
@@ -36,6 +62,15 @@ Tech Stack
 - MySQL 9.1.0 (test environment via Docker)
 - Flyway (database migrations)
 - RestAssured (API testing)
+- 
+API Endpoints
+- `GET /api/person/v1` - Get all persons with pagination
+- `GET /api/person/v1/{id}` - Get person by ID
+- `POST /api/person/v1` - Create new person
+- `PUT /api/person/v1` - Update existing person
+- `PATCH /api/person/v1/{id}` - Disable/enable person
+- `DELETE /api/person/v1/{id}` - Delete person
+- `GET /api/person/v1/findPeopleByName/{firstName}` - Find persons by name with pagination
 
 Links
 - Swagger UI: http://localhost:8080/swagger-ui/index.html

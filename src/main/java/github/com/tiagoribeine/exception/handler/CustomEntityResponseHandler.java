@@ -1,7 +1,5 @@
 package github.com.tiagoribeine.exception.handler;
-import github.com.tiagoribeine.exception.ExceptionResponse;
-import github.com.tiagoribeine.exception.RequiredObjectIsNullException;
-import github.com.tiagoribeine.exception.ResourceNotFoundException;
+import github.com.tiagoribeine.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -45,5 +43,22 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 ex.getMessage(), //Pega a mensagem da exceção
                 request.getDescription( false));
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); //Internal_Server_Error -> Erro 500;
+    }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleFileNotFoundExceptions(Exception ex, WebRequest request){
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(), //Pega a mensagem da exceção
+                request.getDescription( false));
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND); //Internal_Server_Error -> Erro 500;
+    }
+    @ExceptionHandler(FileStorageException.class)
+    public final ResponseEntity<ExceptionResponse> handleFileStorageExceptions(Exception ex, WebRequest request){
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(), //Pega a mensagem da exceção
+                request.getDescription( false));
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR); //Internal_Server_Error -> Erro 500;
     }
 }

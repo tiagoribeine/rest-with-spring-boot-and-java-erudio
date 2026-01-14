@@ -2,6 +2,8 @@
 
 cors: #Adicionando o CORS globalmente
   originPatterns: http://localhost:8080,http://localhost:3000,https://www.erudio.com.br
+file:
+  upload-dir: /UploadDir #Onde será salvo os arquivos na máquina
 spring:
   # IDENTIFICAÇÃO DA APLICAÇÃO
   application:
@@ -37,6 +39,12 @@ spring:
         #dialect: org.hibernate.dialect.MySQL8Dialect
         # ↑ - "Dialeto" do banco - diz ao Hibernate como gerar SQL específico para MySQL 8+
         #   -  Cada banco (MySQL, PostgreSQL, Oracle) tem SQL ligeiramente diferente
+  serverlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB #Tamanho do Multipart(tijolos)
+      max-file-size: 200MB #Tamanho máximo de arquivos que aceitaremos o upload - Depende da regra de negócio
+      max-request-size: 215MB #Máximo de download permitidos
 
     show-sql: false
     # ↑ - Exibe no console os comandos SQL gerados pelo Hibernate:
